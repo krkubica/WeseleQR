@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1b1a18" />
+    <meta name="description" content="Misja weselna Patrycji i Krzysztofa" />
+    <title>Misja: Wesele Patrycji i Krzysztofa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="card" aria-live="polite">
+        <header class="masthead">
+          <span class="eyebrow">MISJA · WESELE</span>
+          <h1>Patrycja <span>&amp;</span> Krzysztof</h1>
+          <p>22 sierpnia 2026</p>
+        </header>
+
+        <div id="nameView" class="view" aria-hidden="true">
+          <div class="name-mark" aria-hidden="true">✦</div>
+          <p class="eyebrow">ZANIM ZACZNIEMY</p>
+          <h2>Jak mamy Cię nazywać?</h2>
+          <p class="lead">Wpisz imię lub nick. Będzie widoczny w Twoim postępie i w przyszłym rankingu weselnym.</p>
+          <label class="sr-only" for="nicknameInput">Imię lub nick</label>
+          <input id="nicknameInput" class="nickname-input" type="text" maxlength="24" autocomplete="nickname" placeholder="Np. Ciocia Kasia" />
+          <button id="saveNameButton" class="button button-primary">Zaczynamy!</button>
+          <p id="nameError" class="form-error" role="alert"></p>
+        </div>
+
+        <div id="welcomeView" class="view is-active">
+          <img class="hero-bottle" src="bottle-hero.png" alt="Ilustracja złocistej butelki weselnego trunku" />
+          <h2>Witaj, <span id="guestName">Gościu</span>!</h2>
+          <p class="lead">Zeskanowałeś kod z weselnej butelki. Odkorkuj ją i odbierz swoją misję.</p>
+          <button id="drawButton" class="button button-primary">🍾 Odkorkuj butelkę</button>
+          <p class="small-note">Każde zadanie pojawi się na tym telefonie tylko raz.</p>
+        </div>
+
+        <div id="drawingView" class="view" aria-hidden="true">
+          <div class="spinner">✦</div>
+          <p class="eyebrow">LOSOWANIE MISJI</p>
+          <h2>Sprawdzamy, co przygotował los…</h2>
+        </div>
+
+        <div id="taskView" class="view" aria-hidden="true">
+          <div id="difficultyBadge" class="badge"></div>
+          <p class="eyebrow">TWOJA MISJA</p>
+          <h2 id="taskText"></h2>
+          <p id="taskHint" class="task-hint">Zrób to po swojemu i wróć po kolejne wyzwanie.</p>
+          <button id="doneButton" class="button button-success">✓ Wykonane</button>
+          <button id="nextButton" class="button button-secondary">To za trudne — losuj inne</button>
+        </div>
+
+        <div id="finishedView" class="view" aria-hidden="true">
+          <div class="trophy" aria-hidden="true">♛</div>
+          <p class="eyebrow">KONIEC MISJI</p>
+          <h2>Legenda Wesela!</h2>
+          <p class="lead">Wykonałeś wszystkie zadania. Teraz pozostaje już tylko świetnie się bawić.</p>
+          <button id="resetButton" class="button button-secondary">Zagraj od nowa na tym telefonie</button>
+        </div>
+
+        <footer class="status">
+          <div class="status-row"><span id="rankText">Gość weselny</span><span id="progressText">0 / 35</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Postęp misji" aria-valuemin="0" aria-valuemax="35" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
+          <p id="encouragement">Pierwsza misja czeka na odkorkowanie.</p>
+          <p id="cloudStatus" class="cloud-status">Łączenie z tablicą wyników…</p>
+        </footer>
+      </section>
+    </main>
+    <div id="confetti" class="confetti" aria-hidden="true"></div>
+    <div id="achievementModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="achievementTitle" aria-hidden="true">
+      <div class="modal-card"><span class="modal-icon">✦</span><p class="eyebrow">NOWE OSIĄGNIĘCIE</p><h2 id="achievementTitle"></h2><p id="achievementText"></p><button id="closeAchievement" class="button button-primary">Dalej!</button></div>
+    </div>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
