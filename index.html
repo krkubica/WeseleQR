@@ -39,6 +39,8 @@
           <div class="quick-actions">
             <button id="openUploadButton" class="button button-secondary">📷 Dodaj zdjęcie</button>
             <button id="openGalleryButton" class="button button-secondary">🖼️ Galeria weselna</button>
+            <button id="openGuestbookButton" class="button button-secondary">✍️ Księga gości</button>
+            <button id="openRankingButton" class="button button-secondary">🏆 Ranking</button>
           </div>
           <p class="small-note">Każde zadanie pojawi się na tym telefonie tylko raz.</p>
         </div>
@@ -76,8 +78,30 @@
           <p class="eyebrow">TWOJA MISJA</p>
           <h2 id="taskText"></h2>
           <p id="taskHint" class="task-hint">Zrób to po swojemu i wróć po kolejne wyzwanie.</p>
+          <p id="photoRequiredNotice" class="photo-required hidden">📷 Ta misja wymaga zdjęcia, aby ją zaliczyć.</p>
+          <button id="taskPhotoButton" class="button button-secondary hidden">📷 Dodaj wymagane zdjęcie</button>
           <button id="doneButton" class="button button-success">✓ Wykonane</button>
           <button id="nextButton" class="button button-secondary">To za trudne — losuj inne</button>
+        </div>
+
+        <div id="guestbookView" class="view" aria-hidden="true">
+          <p class="eyebrow">KSIĘGA GOŚCI</p>
+          <h2>Zostaw kilka słów</h2>
+          <p class="lead">Twoje życzenia zostaną z Patrycją i Krzysztofem na długo po weselu.</p>
+          <label class="sr-only" for="guestbookMessage">Życzenia dla Pary Młodej</label>
+          <textarea id="guestbookMessage" class="guestbook-input" maxlength="360" placeholder="Życzymy Wam…"></textarea>
+          <button id="saveGuestbookButton" class="button button-primary">Zapisz życzenia · +5 pkt</button>
+          <button id="backFromGuestbookButton" class="button button-secondary">Wróć</button>
+          <p id="guestbookStatus" class="form-error" role="status"></p>
+          <div id="guestbookList" class="guestbook-list"></div>
+        </div>
+
+        <div id="rankingView" class="view" aria-hidden="true">
+          <p class="eyebrow">TABLICA WYNIKÓW</p>
+          <h2>Ranking gości</h2>
+          <p id="globalMissions" class="ranking-total">🎉 Goście wykonali 0 misji</p>
+          <div id="publicRanking" class="ranking"></div>
+          <button id="backFromRankingButton" class="button button-secondary">Wróć do misji</button>
         </div>
 
         <div id="finishedView" class="view" aria-hidden="true">
@@ -90,6 +114,7 @@
 
         <footer class="status">
           <div class="status-row"><span id="rankText">Gość weselny</span><span id="progressText">0 / 35</span></div>
+          <p id="pointsText" class="points-text">0 pkt</p>
           <div class="progress-track" role="progressbar" aria-label="Postęp misji" aria-valuemin="0" aria-valuemax="35" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
           <p id="encouragement">Pierwsza misja czeka na odkorkowanie.</p>
           <p id="cloudStatus" class="cloud-status">Łączenie z tablicą wyników…</p>

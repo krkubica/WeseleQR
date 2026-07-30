@@ -34,4 +34,9 @@ export const tasks = [
   ['legend','Złota misja: namów pięć osób do wspólnego zdjęcia z Parą Młodą.'],
   ['legend','Złota misja: zrób wspólne selfie z trzema różnymi pokoleniami gości.'],
   ['legend','Złota misja: jeśli DJ się zgodzi, zadedykij następny utwór Parze Młodej.']
-].map(([level, text], index) => ({ id: index + 1, level, text }));
+].map(([level, text], index) => ({
+  id: index + 1,
+  level,
+  text,
+  requiresPhoto: [4, 9, 13, 16, 19, 22, 25, 30, 32, 34].includes(index + 1)
+}));

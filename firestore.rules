@@ -2,17 +2,12 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    function admin() {
-      return signedIn() && request.auth.token.email == 'TWÓJ_EMAIL_ADMINISTRATORA';
-    }
-    match /participants/{userId} {
-      allow create: if signedIn() && request.auth.uid == userId;
-      allow read, update, delete: if signedIn() && (request.auth.uid == userId || admin());
-    }
-    match /photos/{photoId} {
-      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
-      allow read: if signedIn();
-      allow update, delete: if signedIn() && (resource.data.ownerId == request.auth.uid || admin());
-    }
+    function admin() { return signedIn() && request.auth.token.email == 'TWÓJ_EMAIL_ADMINISTRATORA'; }
+    match /participants/{userId} { allow create: if signedIn() && request.auth.uid == userId; allow read, update, delete: if signedIn() && (request.auth.uid == userId || admin()); }
+    match /publicProfiles/{userId} { allow read: if signedIn(); allow create, update: if signedIn() && request.auth.uid == userId; }
+    match /photos/{photoId} { allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid; allow read: if signedIn(); allow update, delete: if signedIn() && (resource.data.ownerId == request.auth.uid || admin()); }
+    match /guestbook/{entryId} { allow read: if signedIn(); allow create, update, delete: if signedIn() && request.auth.uid == entryId; }
+    match /photoLikes/{likeId} { allow read: if signedIn(); allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid; allow delete: if signedIn() && resource.data.ownerId == request.auth.uid; }
+    match /stats/{statId} { allow read, write: if signedIn(); }
   }
 }
