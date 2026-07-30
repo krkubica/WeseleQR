@@ -36,7 +36,33 @@
           <h2>Witaj, <span id="guestName">Gościu</span>!</h2>
           <p class="lead">Zeskanowałeś kod z weselnej butelki. Odkorkuj ją i odbierz swoją misję.</p>
           <button id="drawButton" class="button button-primary">🍾 Odkorkuj butelkę</button>
+          <div class="quick-actions">
+            <button id="openUploadButton" class="button button-secondary">📷 Dodaj zdjęcie</button>
+            <button id="openGalleryButton" class="button button-secondary">🖼️ Galeria weselna</button>
+          </div>
           <p class="small-note">Każde zadanie pojawi się na tym telefonie tylko raz.</p>
+        </div>
+
+        <div id="uploadView" class="view" aria-hidden="true">
+          <p class="eyebrow">WSPÓLNA GALERIA</p>
+          <h2>Dodaj zdjęcie</h2>
+          <p class="lead">Zrób zdjęcie tej chwili lub wybierz je z telefonu. Pojawi się w galerii weselnej.</p>
+          <label class="photo-picker" for="photoInput"><span>📷</span><b>Wybierz lub zrób zdjęcie</b><small>maksymalnie 8 MB</small></label>
+          <input id="photoInput" class="sr-only" type="file" accept="image/*" capture="environment" />
+          <p id="selectedPhotoName" class="task-hint"></p>
+          <label class="sr-only" for="photoCaption">Opis zdjęcia</label>
+          <input id="photoCaption" class="nickname-input" maxlength="80" placeholder="Krótki opis (opcjonalnie)" />
+          <button id="uploadPhotoButton" class="button button-primary" disabled>Opublikuj zdjęcie</button>
+          <button id="backFromUploadButton" class="button button-secondary">Wróć</button>
+          <p id="uploadStatus" class="form-error" role="status"></p>
+        </div>
+
+        <div id="galleryView" class="view" aria-hidden="true">
+          <p class="eyebrow">WSPÓLNA GALERIA</p>
+          <h2>Wasze chwile</h2>
+          <p id="galleryStatus" class="task-hint">Ładowanie zdjęć…</p>
+          <div id="galleryGrid" class="gallery-grid"></div>
+          <button id="backFromGalleryButton" class="button button-secondary">Wróć do misji</button>
         </div>
 
         <div id="drawingView" class="view" aria-hidden="true">
@@ -74,6 +100,7 @@
     <div id="achievementModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="achievementTitle" aria-hidden="true">
       <div class="modal-card"><span class="modal-icon">✦</span><p class="eyebrow">NOWE OSIĄGNIĘCIE</p><h2 id="achievementTitle"></h2><p id="achievementText"></p><button id="closeAchievement" class="button button-primary">Dalej!</button></div>
     </div>
+    <div id="photoModal" class="modal" role="dialog" aria-modal="true" aria-label="Powiększone zdjęcie" aria-hidden="true"><div class="photo-modal-card"><button id="closePhotoModal" class="close-photo" aria-label="Zamknij">×</button><img id="modalPhoto" alt="Zdjęcie z galerii weselnej" /><p id="modalPhotoCaption"></p></div></div>
     <script type="module" src="script.js"></script>
   </body>
 </html>

@@ -10,10 +10,10 @@ function show(id) { ['loginPanel','dashboardPanel'].forEach(name => { const el=$
 function safe(text) { const node=document.createElement('span'); node.textContent=text; return node.textContent; }
 async function loadDashboard() {
   $('dashboardStatus').textContent='Pobieranie wyników…';
-  const snapshot=await getDocs(collection(db,'participants'));
+  const [snapshot, photoSnapshot]=await Promise.all([getDocs(collection(db,'participants')),getDocs(collection(db,'photos'))]);
   const users=snapshot.docs.map(d=>d.data()).sort((a,b)=>(b.completedTaskIds?.length||0)-(a.completedTaskIds?.length||0));
   const total=users.reduce((sum,user)=>sum+(user.completedTaskIds?.length||0),0);
-  $('guestCount').textContent=users.length; $('missionCount').textContent=total; $('averageCount').textContent=users.length?(total/users.length).toFixed(1):'0';
+  $('guestCount').textContent=users.length; $('missionCount').textContent=total; $('photoCount').textContent=photoSnapshot.size; $('averageCount').textContent=users.length?(total/users.length).toFixed(1):'0';
   $('ranking').innerHTML=users.length?users.map((user,index)=>`<article class="rank-row"><b>${index+1}</b><span>${safe(user.nickname||'Gość')}</span><strong>${user.completedTaskIds?.length||0} / 35</strong></article>`).join(''):'<p class="task-hint">Jeszcze nikt nie rozpoczął misji.</p>';
   $('dashboardStatus').textContent=`Ostatnie odświeżenie: ${new Date().toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})}`;
 }
