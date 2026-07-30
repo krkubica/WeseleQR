@@ -16,7 +16,9 @@ export async function connectGuest(state) {
   participantRef = doc(db, 'participants', auth.currentUser.uid); publicProfileRef = doc(db, 'publicProfiles', auth.currentUser.uid);
   const snapshot = await getDoc(participantRef);
   if (snapshot.exists()) { const remote=snapshot.data(), completed=remote.completedTaskIds||[]; state={...state,nickname:remote.nickname||state.nickname,completed,achievements:remote.achievements||[],points:typeof remote.points==='number'?remote.points:completed.length*10,hasGuestbook:Boolean(remote.hasGuestbook)}; }
-  await Promise.all([setDoc(participantRef,{...payload(state),createdAt:snapshot.exists()?undefined:serverTimestamp()},{merge:true}),setDoc(publicProfileRef,profilePayload(state),{merge:true})]);
+  const participantData = payload(state);
+  if (!snapshot.exists()) participantData.createdAt = serverTimestamp();
+  await Promise.all([setDoc(participantRef,participantData,{merge:true}),setDoc(publicProfileRef,profilePayload(state),{merge:true})]);
   const statsRef=doc(db,'stats','global'); if(!(await getDoc(statsRef)).exists()) await setDoc(statsRef,{completedTasks:0});
   return { mode:'cloud', state };
 }
