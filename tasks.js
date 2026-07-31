@@ -38,5 +38,5 @@ export const tasks = [
   id: index + 1,
   level,
   text,
-  requiresPhoto: [4, 9, 13, 16, 19, 22, 23, 25, 30, 32, 34].includes(index + 1)
+  requiresPhoto: [4, 9, 13, 16, 17, 19, 22, 23, 25, 30, 32, 34].includes(index + 1)
 }));
