@@ -16,7 +16,7 @@ export const tasks = [
   ['medium','Zrób zdjęcie z osobą urodzoną w tym samym miesiącu co Ty.'],
   ['medium','Wypij toast z kimś, z kim jeszcze dziś nie piłeś.'],
   ['medium','Namów trzy osoby do wspólnego zdjęcia.'],
-  ['medium','Zrób najzabawniejszą minę do zdjęcia.'],
+  ['medium','Znajdź świadka i podziękuj mu za organizację.'],
   ['medium','Zatańcz przez całą jedną piosenkę bez schodzenia z parkietu.'],
   ['medium','Zaproponuj wspólne zdjęcie osobom z innego stołu.'],
   ['medium','Znajdź gościa, który zna Patrycję lub Krzysztofa dłużej niż 15 lat.'],
@@ -38,5 +38,5 @@ export const tasks = [
   id: index + 1,
   level,
   text,
-  requiresPhoto: [4, 9, 13, 16, 17, 19, 22, 23, 25, 30, 32, 34].includes(index + 1)
+  requiresPhoto: [4, 9, 13, 16, 19, 22, 25, 30, 32, 34].includes(index + 1)
 }));

@@ -32,7 +32,7 @@
         </div>
 
         <div id="welcomeView" class="view is-active">
-          <img class="hero-bottle" src="bottle-hero.png" alt="Ilustracja złocistej butelki weselnego trunku" />
+          <img class="hero-bottle" src="bottle-hero-v2.png" alt="Ilustracja złocistej butelki weselnego trunku z etykietą P plus K" />
           <h2>Witaj, <span id="guestName">Gościu</span>!</h2>
           <p class="lead">Zeskanowałeś kod z weselnej butelki. Odkorkuj ją i odbierz swoją misję.</p>
           <button id="drawButton" class="button button-primary">🍾 Odkorkuj butelkę</button>
@@ -54,6 +54,8 @@
           <p id="selectedPhotoName" class="task-hint"></p>
           <label class="sr-only" for="photoCaption">Opis zdjęcia</label>
           <input id="photoCaption" class="nickname-input" maxlength="80" placeholder="Krótki opis (opcjonalnie)" />
+          <label class="sr-only" for="photoCategory">Kategoria zdjęcia</label>
+          <select id="photoCategory" class="nickname-input"><option value="parkiet">Parkiet</option><option value="pierwszy-taniec">Pierwszy taniec</option><option value="tort">Tort</option><option value="oczepiny">Oczepiny</option><option value="ogrod">W ogrodzie</option><option value="misje">Misje</option></select>
           <button id="uploadPhotoButton" class="button button-primary" disabled>Opublikuj zdjęcie</button>
           <button id="backFromUploadButton" class="button button-secondary">Wróć</button>
           <p id="uploadStatus" class="form-error" role="status"></p>
@@ -66,6 +68,8 @@
             <button id="galleryNewestButton" class="gallery-tab is-selected" role="tab">🆕 Najnowsze</button>
             <button id="galleryPopularButton" class="gallery-tab" role="tab">🔥 Najpopularniejsze</button>
           </div>
+          <div id="categoryTabs" class="category-tabs"></div>
+          <button id="galleryAddPhotoButton" class="button button-primary">📷 Dodaj zdjęcie do tej kategorii</button>
           <p id="galleryStatus" class="task-hint">Ładowanie zdjęć…</p>
           <div id="galleryGrid" class="gallery-grid"></div>
           <button id="backFromGalleryButton" class="button button-secondary">Wróć do misji</button>
