@@ -1,20 +1,21 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
-import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 import { firebaseConfig, ADMIN_EMAIL } from './firebase-config.js';
 
 const $ = id => document.getElementById(id);
 const isConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('WKLEJ_');
 let auth, db;
 function show(id) { ['loginPanel','dashboardPanel'].forEach(name => { const el=$(name), active=name===id; el.classList.toggle('is-active', active); el.setAttribute('aria-hidden', String(!active)); }); }
-function safe(text) { const node=document.createElement('span'); node.textContent=text; return node.textContent; }
+function safe(text) { return String(text || '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char])); }
 async function loadDashboard() {
   $('dashboardStatus').textContent='Pobieranie wyników…';
-  const [snapshot, photoSnapshot]=await Promise.all([getDocs(collection(db,'participants')),getDocs(collection(db,'photos'))]);
-  const users=snapshot.docs.map(d=>d.data()).sort((a,b)=>(b.completedTaskIds?.length||0)-(a.completedTaskIds?.length||0));
-  const total=users.reduce((sum,user)=>sum+(user.completedTaskIds?.length||0),0);
+  const [snapshot, photoSnapshot]=await Promise.all([getDocs(collection(db,'publicProfiles')),getDocs(collection(db,'photos'))]);
+  const users=snapshot.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.points||0)-(a.points||0));
+  const total=users.reduce((sum,user)=>sum+(user.completed||0),0);
   $('guestCount').textContent=users.length; $('missionCount').textContent=total; $('photoCount').textContent=photoSnapshot.size; $('averageCount').textContent=users.length?(total/users.length).toFixed(1):'0';
-  $('ranking').innerHTML=users.length?users.map((user,index)=>`<article class="rank-row"><b>${index+1}</b><span>${safe(user.nickname||'Gość')}</span><strong>${user.completedTaskIds?.length||0} / 35</strong></article>`).join(''):'<p class="task-hint">Jeszcze nikt nie rozpoczął misji.</p>';
+  $('ranking').innerHTML=users.length?users.map((user,index)=>`<article class="rank-row admin-rank-row"><b>${index+1}</b><span>${safe(user.nickname||'Gość')}</span><strong>${user.points||0} pkt · ${user.completed||0} / 35</strong><button class="remove-ranking" data-user-id="${user.id}">Usuń z rankingu</button></article>`).join(''):'<p class="task-hint">Jeszcze nikt nie rozpoczął misji.</p>';
+  document.querySelectorAll('.remove-ranking').forEach(button=>button.addEventListener('click',async()=>{if(!confirm('Usunąć tego gościa wyłącznie z publicznego rankingu?'))return;button.disabled=true;try{await deleteDoc(doc(db,'publicProfiles',button.dataset.userId));await loadDashboard();}catch{button.disabled=false;$('dashboardStatus').textContent='Nie udało się usunąć wpisu. Sprawdź nowe reguły Firestore.';}}));
   $('dashboardStatus').textContent=`Ostatnie odświeżenie: ${new Date().toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})}`;
 }
 async function login() {
